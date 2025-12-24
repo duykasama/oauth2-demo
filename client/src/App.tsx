@@ -1,16 +1,22 @@
-import { useState } from 'react'
-import './App.css'
-import Home from './routes/home'
-import Login from './routes/login'
+import { createRouter, RouterProvider } from '@tanstack/react-router'
+import { routeTree } from './routeTree.gen'
+
+const router = createRouter({
+    routeTree,
+    defaultPreload: 'intent',
+    scrollRestoration: true,
+})
+
+declare module '@tanstack/react-router' {
+    interface Register {
+        router: typeof router
+    }
+}
 
 function App() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-
     return (
         <>
-            {
-                isAuthenticated ? <Home /> : <Login />
-            }
+            <RouterProvider router={router} />
         </>
     )
 }
